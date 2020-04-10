@@ -1,0 +1,21 @@
+service:
+  name: andthen-tasks
+  webpack: webpack.config
+  config:
+    accountId: ${env:CLOUDFLARE_ACCOUNT_ID}
+    zoneId: ${env:CLOUDFLARE_ZONE_ID}
+
+provider:
+  name: cloudflare
+  stage: ${env:STAGE}
+
+plugins:
+  - serverless-cloudflare-workers
+
+functions:
+  hello-world:
+    script: dist/hello-world
+    events:
+      - http:
+          url: ${env:DOMAIN}/hello-world
+          method: GET
